@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { CircleMarker, Map, Marker, TileLayer } from 'react-leaflet'
 import './App.css'
-import DialogAdd from './DialogAdd';
+import DialogAdd from './DialogAdd'
+import ErrorBoundaries from './ErrorBoundaries'
 
 // Hack to show markers correctly
 // https://github.com/PaulLeCam/react-leaflet/issues/255#issuecomment-261904061
@@ -53,26 +54,21 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        res => {
-          this.updateCoords(res.coords.latitude, res.coords.longitude)
-        },
-        err => {
-          geolocationErrorHandler(err)
-        }
-      )
-    }
-  }
-
   updateCoords(lat, lng) {
     this.setState({
       position: {
         lat,
         lng
-      }
+      },
+      hasError: false,
     })
+  }
+
+  componentDidCatch(error, info) {
+    // Display fallback UI
+    this.setState({ hasError: true });
+    // You can also log the error to an error reporting service
+    console.error(error, info);
   }
 
   addItem = (event) => {
@@ -111,6 +107,7 @@ class App extends Component {
 
   render() {
     return (
+      <ErrorBoundaries>
       <div className="App">
         <Map
           center={this.state.position}
@@ -137,6 +134,7 @@ class App extends Component {
           {this.state.dialogShown && <DialogAdd onSave={this.addItem} />}
         </Map>
       </div>
+      </ErrorBoundaries>
     )
   }
 }

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import config from './config';
-import FormElement from './FormElement';
+import React, { Component } from 'react'
+import config from './config'
+import FormElement from './FormElement'
 
 const createFormElement = (attributes) => {
   let elements = []
@@ -27,4 +27,4 @@ class DialogAdd extends Component {
   }
 }
 
-export default DialogAdd;
+export default DialogAdd

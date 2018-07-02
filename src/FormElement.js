@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 const createOptions = (options) => {
-  let elements = [];
+  let elements = []
 
   for (let i = 0; i < options.length; i++) {
     elements.push(
@@ -34,4 +34,4 @@ class FormElement extends Component {
   }
 }
 
-export default FormElement;
+export default FormElement
